@@ -2,6 +2,13 @@
 
 SEMANTIC_NAME=$1
 
+if [[ `git status --porcelain` ]]; then
+  echo
+  echo "Error: Git working directory is not clean. Please commit your changes or stash them."
+  echo
+  exit 1
+fi;
+
 if [ "$SEMANTIC_NAME" == "" ]; then
   echo
   echo "Missing semantic name parameter. Valid values are [patch, minor, major]"
@@ -48,7 +55,5 @@ case "$SEMANTIC_NAME" in
     ;;
 esac
 
-# git checkout -b release-v$(node -p "require('./package.json').version")
-# git push -u origin release-v$(node -p "require('./package.json').version")
-# git checkout main
-# git push origin
+git push origin
+git push origin v$(node -p "require(./package.json).version")

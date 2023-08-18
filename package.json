@@ -10,8 +10,9 @@
   "scripts": {
     "precommit": "yarn lint-staged --allow-empty",
     "prepare": "yarn husky install .repo/husky && yarn husky set .repo/husky/pre-commit \"yarn precommit\"",
-    "push:test": "sh ./scripts/push.sh test",
-    "push:prod": "sh ./scripts/push.sh prod",
+    "push:patch": "sh ./scripts/version.sh patch",
+    "push:minor": "sh ./scripts/version.sh minor",
+    "push:major": "sh ./scripts/version.sh major",
     "test:watch:verbose": "NODE_ENV=dev yarn jest --coverage --watch --verbose=true",
     "test:watch": "NODE_ENV=dev yarn jest --coverage --watch --verbose=false --silent",
     "test:verbose": "yarn jest --coverage --verbose=true",
@@ -23,9 +24,7 @@
     "build": "yarn tsc -b"
   },
   "lint-staged": {
-    "src/**/*.{js,ts,json}": [
-      "yarn prettier --write"
-    ]
+    "src/**/*.{js,ts,json}": ["yarn prettier --write"]
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
