@@ -11,3 +11,4 @@ ion.debug(`debug`);
 ion.info(`info`);
 ion.warn(`warn`);
 ion.error(`error`);
+ion.success(`success`);

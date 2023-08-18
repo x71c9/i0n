@@ -14,4 +14,5 @@ index_1.default.debug(`debug`);
 index_1.default.info(`info`);
 index_1.default.warn(`warn`);
 index_1.default.error(`error`);
+index_1.default.success(`success`);
 //# sourceMappingURL=run.js.map
