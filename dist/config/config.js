@@ -42,7 +42,7 @@ exports.config = {
         INFO: method_1.CONSOLE_METHOD.LOG,
         WARN: method_1.CONSOLE_METHOD.WARN,
         ERROR: method_1.CONSOLE_METHOD.ERROR,
-        SUCCESS: method_1.CONSOLE_METHOD.LOG
-    }
+        SUCCESS: method_1.CONSOLE_METHOD.LOG,
+    },
 };
 //# sourceMappingURL=config.js.map
