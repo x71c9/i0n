@@ -1,6 +1,6 @@
 {
   "name": "i0n",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A NodeJS library for logging",
   "main": "dist/index.js",
   "repository": "git@github.com:x71c9/i0n.git",
