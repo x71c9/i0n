@@ -10,9 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.set = void 0;
 const config_1 = require("./config");
 function set(params) {
-    if (!params
-        || typeof params !== 'object'
-        || Object.entries(params).length === 0) {
+    if (!params ||
+        typeof params !== 'object' ||
+        Object.entries(params).length === 0) {
         return;
     }
     for (const key in params) {
