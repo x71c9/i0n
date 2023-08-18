@@ -1,6 +1,6 @@
 {
   "name": "i0n",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A NodeJS library for logging",
   "main": "dist/index.js",
   "repository": "git@github.com:x71c9/i0n.git",
@@ -23,7 +23,9 @@
     "build": "yarn tsc -b"
   },
   "lint-staged": {
-    "src/**/*.{js,ts,json}": ["yarn prettier --write"]
+    "src/**/*.{js,ts,json}": [
+      "yarn prettier --write"
+    ]
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
