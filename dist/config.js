@@ -30,8 +30,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.log_level = exports.prefix = void 0;
+exports.config = void 0;
 const types = __importStar(require("./types"));
-exports.prefix = '';
-exports.log_level = types.LOG_LEVEL.TRACE;
+exports.config = {
+    prefix: '',
+    log_level: types.LOG_LEVEL.TRACE,
+};
 //# sourceMappingURL=config.js.map

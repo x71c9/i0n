@@ -1,7 +1,7 @@
 "use strict";
 /**
  *
- * Main module
+ * Config config module
  *
  * @packageDocumentation
  *
@@ -22,9 +22,6 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -34,8 +31,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
-__exportStar(require("./log/index"), exports);
-__exportStar(require("./types/index"), exports);
-const config = __importStar(require("./config/index"));
-exports.config = config;
-//# sourceMappingURL=main.js.map
+const types = __importStar(require("../types/index"));
+exports.config = {
+    prefix: '',
+    log_level: types.LOG_LEVEL.TRACE,
+};
+//# sourceMappingURL=config.js.map
