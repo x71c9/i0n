@@ -1,6 +1,6 @@
 /**
  *
- * Types module
+ * Level types module
  *
  * @packageDocumentation
  *

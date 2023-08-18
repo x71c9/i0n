@@ -8,36 +8,35 @@
 
 import * as types from '../types';
 import {COLOR, Color} from '../types/color';
+import {METHOD, Method} from '../types/method';
+import {CONSOLE_METHOD, ConsoleMethod} from '../types/method';
 import {config} from '../config/config';
 
 export function trace(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.TRACE, COLOR.DIM, data);
+  _print_full_objects(METHOD.TRACE, COLOR.DIM, data);
 }
 export function debug(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.DEBUG, COLOR.MAGENTA, data);
+  _print_full_objects(METHOD.DEBUG, COLOR.MAGENTA, data);
 }
 export function info(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.INFO, COLOR.CYAN, data);
+  _print_full_objects(METHOD.INFO, COLOR.CYAN, data);
 }
 export function warn(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.WARN, COLOR.YELLOW, data);
+  _print_full_objects(METHOD.WARN, COLOR.YELLOW, data);
 }
 export function error(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.ERROR, COLOR.RED, data);
+  _print_full_objects(METHOD.ERROR, COLOR.RED, data);
 }
 export function success(...data: any): void {
-  _print_full_objects(types.LOG_LEVEL.ERROR, COLOR.GREEN, data);
+  _print_full_objects(METHOD.SUCCESS, COLOR.GREEN, data);
 }
-function _print_full_objects(
-  level: types.LogLevel,
-  color: Color,
-  data: any
-): void {
+
+function _print_full_objects(method: Method, color: Color, data: any): void {
   let full_log: string[] = [];
   for (const arg of data) {
     full_log.push(_process_data(arg));
   }
-  _print(level, color, full_log.join(' '));
+  _print(method, color, full_log.join(' '));
 }
 
 function _process_data(data: any): string {
@@ -47,10 +46,10 @@ function _process_data(data: any): string {
   return data;
 }
 
-function _print(level: types.LogLevel, color: Color, data: any): void {
+function _print(method: Method, color: Color, data: any): void {
   const with_prefix = `${config.prefix}${data}`;
   const final_data = _paint(color, with_prefix);
-  return _print_primitive(level, final_data);
+  return _print_primitive(method, final_data);
 }
 
 function _paint(color: Color, str: string): string {
@@ -62,42 +61,77 @@ function _paint(color: Color, str: string): string {
   return styled_log;
 }
 
-function _print_primitive(level: types.LogLevel, data: any): void {
-  switch (level) {
-    case types.LOG_LEVEL.TRACE: {
+function _print_primitive(method: Method, data: any): void {
+  switch (method) {
+    case METHOD.TRACE: {
       if (!_is_traceble(config.log_level)) {
         break;
       }
-      // console.trace(data);
-      console.log(data);
+      _use_console_method(METHOD.TRACE, data);
       break;
     }
-    case types.LOG_LEVEL.DEBUG: {
+    case METHOD.DEBUG: {
       if (!_is_debugable(config.log_level)) {
         break;
       }
-      // console.debug(data);
-      console.log(data);
+      _use_console_method(METHOD.DEBUG, data);
       break;
     }
-    case types.LOG_LEVEL.INFO: {
+    case METHOD.INFO: {
       if (!_is_infoble(config.log_level)) {
         break;
       }
-      console.log(data);
+      _use_console_method(METHOD.INFO, data);
       break;
     }
-    case types.LOG_LEVEL.WARN: {
+    case METHOD.WARN: {
       if (!_is_warnable(config.log_level)) {
         break;
       }
-      console.warn(data);
+      _use_console_method(METHOD.WARN, data);
       break;
     }
-    case types.LOG_LEVEL.ERROR: {
+    case METHOD.ERROR: {
       if (!_is_errable(config.log_level)) {
         break;
       }
+      _use_console_method(METHOD.ERROR, data);
+      break;
+    }
+    case METHOD.SUCCESS: {
+      if (!_is_errable(config.log_level)) {
+        break;
+      }
+      _use_console_method(METHOD.SUCCESS, data);
+      break;
+    }
+  }
+}
+
+function _use_console_method(method: Method, data: any) {
+  const console_method: ConsoleMethod | undefined = config.methods[method];
+  switch (console_method) {
+    case CONSOLE_METHOD.TRACE: {
+      console.trace(data);
+      break;
+    }
+    case CONSOLE_METHOD.DEBUG: {
+      console.debug(data);
+      break;
+    }
+    case CONSOLE_METHOD.LOG: {
+      console.log(data);
+      break;
+    }
+    case CONSOLE_METHOD.INFO: {
+      console.info(data);
+      break;
+    }
+    case CONSOLE_METHOD.WARN: {
+      console.warn(data);
+      break;
+    }
+    case CONSOLE_METHOD.ERROR: {
       console.error(data);
       break;
     }

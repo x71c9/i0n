@@ -28,6 +28,15 @@ export function set(params: Partial<ConfigParams>) {
     if (typeof params[k] !== typeof config[k]) {
       delete params[k];
     }
+    // TODO: Imporve it
+    if (config[k] && typeof config[k] === 'object') {
+      for (const [subkey, subvalue] of Object.entries(config[k])) {
+        const params_k = params[k];
+        if (params_k && !params_k.hasOwnProperty(subkey)) {
+          (params_k as any)[subkey] = subvalue as any;
+        }
+      }
+    }
   }
   Object.assign(config, params);
 }

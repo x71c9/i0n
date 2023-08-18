@@ -23,6 +23,15 @@ function set(params) {
         if (typeof params[k] !== typeof config_1.config[k]) {
             delete params[k];
         }
+        // TODO: Imporve it
+        if (config_1.config[k] && typeof config_1.config[k] === 'object') {
+            for (const [subkey, subvalue] of Object.entries(config_1.config[k])) {
+                const params_k = params[k];
+                if (params_k && !params_k.hasOwnProperty(subkey)) {
+                    params_k[subkey] = subvalue;
+                }
+            }
+        }
     }
     Object.assign(config_1.config, params);
 }

@@ -33,37 +33,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.success = exports.error = exports.warn = exports.info = exports.debug = exports.trace = void 0;
 const types = __importStar(require("../types"));
 const color_1 = require("../types/color");
+const method_1 = require("../types/method");
+const method_2 = require("../types/method");
 const config_1 = require("../config/config");
 function trace(...data) {
-    _print_full_objects(types.LOG_LEVEL.TRACE, color_1.COLOR.DIM, data);
+    _print_full_objects(method_1.METHOD.TRACE, color_1.COLOR.DIM, data);
 }
 exports.trace = trace;
 function debug(...data) {
-    _print_full_objects(types.LOG_LEVEL.DEBUG, color_1.COLOR.MAGENTA, data);
+    _print_full_objects(method_1.METHOD.DEBUG, color_1.COLOR.MAGENTA, data);
 }
 exports.debug = debug;
 function info(...data) {
-    _print_full_objects(types.LOG_LEVEL.INFO, color_1.COLOR.CYAN, data);
+    _print_full_objects(method_1.METHOD.INFO, color_1.COLOR.CYAN, data);
 }
 exports.info = info;
 function warn(...data) {
-    _print_full_objects(types.LOG_LEVEL.WARN, color_1.COLOR.YELLOW, data);
+    _print_full_objects(method_1.METHOD.WARN, color_1.COLOR.YELLOW, data);
 }
 exports.warn = warn;
 function error(...data) {
-    _print_full_objects(types.LOG_LEVEL.ERROR, color_1.COLOR.RED, data);
+    _print_full_objects(method_1.METHOD.ERROR, color_1.COLOR.RED, data);
 }
 exports.error = error;
 function success(...data) {
-    _print_full_objects(types.LOG_LEVEL.ERROR, color_1.COLOR.GREEN, data);
+    _print_full_objects(method_1.METHOD.SUCCESS, color_1.COLOR.GREEN, data);
 }
 exports.success = success;
-function _print_full_objects(level, color, data) {
+function _print_full_objects(method, color, data) {
     let full_log = [];
     for (const arg of data) {
         full_log.push(_process_data(arg));
     }
-    _print(level, color, full_log.join(' '));
+    _print(method, color, full_log.join(' '));
 }
 function _process_data(data) {
     if (typeof data === 'object' && data !== null) {
@@ -71,10 +73,10 @@ function _process_data(data) {
     }
     return data;
 }
-function _print(level, color, data) {
+function _print(method, color, data) {
     const with_prefix = `${config_1.config.prefix}${data}`;
     const final_data = _paint(color, with_prefix);
-    return _print_primitive(level, final_data);
+    return _print_primitive(method, final_data);
 }
 function _paint(color, str) {
     if (_env_no_color_is_true()) {
@@ -84,42 +86,76 @@ function _paint(color, str) {
     const styled_log = style + str + _terminal_styles.reset;
     return styled_log;
 }
-function _print_primitive(level, data) {
-    switch (level) {
-        case types.LOG_LEVEL.TRACE: {
+function _print_primitive(method, data) {
+    switch (method) {
+        case method_1.METHOD.TRACE: {
             if (!_is_traceble(config_1.config.log_level)) {
                 break;
             }
-            // console.trace(data);
-            console.log(data);
+            _use_console_method(method_1.METHOD.TRACE, data);
             break;
         }
-        case types.LOG_LEVEL.DEBUG: {
+        case method_1.METHOD.DEBUG: {
             if (!_is_debugable(config_1.config.log_level)) {
                 break;
             }
-            // console.debug(data);
-            console.log(data);
+            _use_console_method(method_1.METHOD.DEBUG, data);
             break;
         }
-        case types.LOG_LEVEL.INFO: {
+        case method_1.METHOD.INFO: {
             if (!_is_infoble(config_1.config.log_level)) {
                 break;
             }
-            console.log(data);
+            _use_console_method(method_1.METHOD.INFO, data);
             break;
         }
-        case types.LOG_LEVEL.WARN: {
+        case method_1.METHOD.WARN: {
             if (!_is_warnable(config_1.config.log_level)) {
                 break;
             }
-            console.warn(data);
+            _use_console_method(method_1.METHOD.WARN, data);
             break;
         }
-        case types.LOG_LEVEL.ERROR: {
+        case method_1.METHOD.ERROR: {
             if (!_is_errable(config_1.config.log_level)) {
                 break;
             }
+            _use_console_method(method_1.METHOD.ERROR, data);
+            break;
+        }
+        case method_1.METHOD.SUCCESS: {
+            if (!_is_errable(config_1.config.log_level)) {
+                break;
+            }
+            _use_console_method(method_1.METHOD.SUCCESS, data);
+            break;
+        }
+    }
+}
+function _use_console_method(method, data) {
+    const console_method = config_1.config.methods[method];
+    switch (console_method) {
+        case method_2.CONSOLE_METHOD.TRACE: {
+            console.trace(data);
+            break;
+        }
+        case method_2.CONSOLE_METHOD.DEBUG: {
+            console.debug(data);
+            break;
+        }
+        case method_2.CONSOLE_METHOD.LOG: {
+            console.log(data);
+            break;
+        }
+        case method_2.CONSOLE_METHOD.INFO: {
+            console.info(data);
+            break;
+        }
+        case method_2.CONSOLE_METHOD.WARN: {
+            console.warn(data);
+            break;
+        }
+        case method_2.CONSOLE_METHOD.ERROR: {
             console.error(data);
             break;
         }

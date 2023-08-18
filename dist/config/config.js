@@ -32,8 +32,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
 const types = __importStar(require("../types/index"));
+const method_1 = require("../types/method");
 exports.config = {
     prefix: '',
     log_level: types.LOG_LEVEL.TRACE,
+    methods: {
+        TRACE: method_1.CONSOLE_METHOD.LOG,
+        DEBUG: method_1.CONSOLE_METHOD.LOG,
+        INFO: method_1.CONSOLE_METHOD.LOG,
+        WARN: method_1.CONSOLE_METHOD.WARN,
+        ERROR: method_1.CONSOLE_METHOD.ERROR,
+        SUCCESS: method_1.CONSOLE_METHOD.LOG
+    }
 };
 //# sourceMappingURL=config.js.map
