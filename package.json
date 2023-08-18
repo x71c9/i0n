@@ -17,15 +17,13 @@
     "test:verbose": "yarn jest --coverage --verbose=true",
     "test": "yarn jest --coverage --verbose=false --silent",
     "dev:client": "yarn live-server client",
-    "dev:base": "node ./dist/index.js",
+    "dev:base": "node ./dist/run.js",
     "dev:run": "yarn tsc-watch --onSuccess \"yarn dev:base\"",
     "dev": "yarn tsc -w",
     "build": "yarn tsc -b"
   },
   "lint-staged": {
-    "src/**/*.{js,ts,json}": [
-      "yarn prettier --write"
-    ]
+    "src/**/*.{js,ts,json}": ["yarn prettier --write"]
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
@@ -46,6 +44,5 @@
     "tsc-watch": "^6.0.0",
     "typescript": "^4.9.4"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
