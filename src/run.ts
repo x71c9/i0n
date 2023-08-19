@@ -49,9 +49,9 @@ ion.error(`error`);
 ion.success(`success`);
 ion.fail(`fail`);
 
-const spinner = ora('Loading unicorns').start();
+const spinner = ora('Loading').start();
 
 setTimeout(() => {
   spinner.color = 'yellow';
-  spinner.text = 'Loading rainbows';
+  spinner.text = 'Loading more';
 }, 1000);
