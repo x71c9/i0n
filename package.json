@@ -20,12 +20,15 @@
     "test": "yarn jest --coverage --verbose=false --silent",
     "dev:client": "yarn live-server client",
     "dev:base": "node ./dist/run.js",
-    "dev:run": "yarn tsc-watch --onSuccess \"yarn dev:base\"",
+    "dev:run": "yarn tsc-watch --onSuccess \" yarn dev:base\"",
     "dev": "yarn tsc -w",
-    "build": "yarn tsc -b"
+    "build": "yarn tsc -b",
+    "pretty": "yarn prettier --write \"src/**/*.{js,ts,json}\""
   },
   "lint-staged": {
-    "src/**/*.{js,ts,json}": ["yarn prettier --write"]
+    "src/**/*.{js,ts,json}": [
+      "yarn prettier --write"
+    ]
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

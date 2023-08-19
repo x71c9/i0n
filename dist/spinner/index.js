@@ -7,6 +7,6 @@
  */
 import ora from 'ora';
 export const spinner = ora({
-    color: 'magenta'
+    color: 'magenta',
 });
 //# sourceMappingURL=index.js.map
