@@ -6,8 +6,8 @@
  *
  */
 
-import * as types from '../types/index';
-import {config} from '../config/config';
+import * as types from '../types/index.js';
+import {config} from '../config/config.js';
 
 type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];

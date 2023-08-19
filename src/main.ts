@@ -6,10 +6,10 @@
  *
  */
 
-export * from './log/index';
+export * from './log/index.js';
 
-export {LOG_LEVEL, LogLevel, COLOR, Color} from './types/index';
+export {LOG_LEVEL, LogLevel, COLOR, Color} from './types/index.js';
 
-import * as config from './config/index';
+import * as config from './config/index.js';
 
 export {config};

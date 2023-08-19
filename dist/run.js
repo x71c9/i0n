@@ -1,15 +1,11 @@
-"use strict";
 /**
  *
  * Run module
  *
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __importDefault(require("./index"));
-index_1.default.config.set({
+import ora from 'ora';
+import ion from './index.js';
+ion.config.set({
 // log_level: ion.LOG_LEVEL.TRACE,
 // color: true,
 // prefix: 'x71c9 ',
@@ -42,11 +38,16 @@ index_1.default.config.set({
 //   color: '#770000',
 // },
 });
-index_1.default.trace(`trace`);
-index_1.default.debug(`debug`);
-index_1.default.info(`info`);
-index_1.default.warn(`warn`);
-index_1.default.error(`error`);
-index_1.default.success(`success`);
-index_1.default.fail(`fail`);
+ion.trace(`trace`);
+ion.debug(`debug`);
+ion.info(`info`);
+ion.warn(`warn`);
+ion.error(`error`);
+ion.success(`success`);
+ion.fail(`fail`);
+const spinner = ora('Loading unicorns').start();
+setTimeout(() => {
+    spinner.color = 'yellow';
+    spinner.text = 'Loading rainbows';
+}, 1000);
 //# sourceMappingURL=run.js.map

@@ -6,7 +6,7 @@
  *
  */
 
-import {ObjectValue} from './utils';
+import {ObjectValue} from './utils.js';
 
 export type MethodConfig = {
   method: ConsoleMethod;

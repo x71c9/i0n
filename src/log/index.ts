@@ -6,8 +6,8 @@
  *
  */
 
-import * as types from '../types';
-import {config} from '../config/config';
+import * as types from '../types/index.js';
+import {config} from '../config/config.js';
 
 export function trace(...data: any): void {
   _print_full_objects(types.METHOD.trace, data);

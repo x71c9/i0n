@@ -4,7 +4,8 @@
  *
  */
 
-import ion from './index';
+import ora from 'ora';
+import ion from './index.js';
 
 ion.config.set({
   // log_level: ion.LOG_LEVEL.TRACE,
@@ -47,3 +48,10 @@ ion.warn(`warn`);
 ion.error(`error`);
 ion.success(`success`);
 ion.fail(`fail`);
+
+const spinner = ora('Loading unicorns').start();
+
+setTimeout(() => {
+  spinner.color = 'yellow';
+  spinner.text = 'Loading rainbows';
+}, 1000);
