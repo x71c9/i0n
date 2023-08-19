@@ -4,7 +4,6 @@
  *
  */
 
-import ora from 'ora';
 import ion from './index.js';
 
 ion.config.set({
@@ -48,10 +47,4 @@ ion.warn(`warn`);
 ion.error(`error`);
 ion.success(`success`);
 ion.fail(`fail`);
-
-const spinner = ora('Loading').start();
-
-setTimeout(() => {
-  spinner.color = 'yellow';
-  spinner.text = 'Loading more';
-}, 1000);
+ion.spinner.start();

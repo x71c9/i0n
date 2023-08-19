@@ -25,9 +25,7 @@
     "build": "yarn tsc -b"
   },
   "lint-staged": {
-    "src/**/*.{js,ts,json}": [
-      "yarn prettier --write"
-    ]
+    "src/**/*.{js,ts,json}": ["yarn prettier --write"]
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
