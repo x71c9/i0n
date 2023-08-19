@@ -6,13 +6,16 @@
  *
  */
 
-import {Config, config} from './config';
+import * as types from '../types/index';
+import {config} from '../config/config';
 
-type ConfigParams = {
-  [k in keyof Config]: Config[k];
+type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
 };
 
-export function set(params: Partial<ConfigParams>) {
+type ConfigParams = DeepPartial<types.Config>;
+
+export function set(params: ConfigParams) {
   if (
     !params ||
     typeof params !== 'object' ||
@@ -20,23 +23,22 @@ export function set(params: Partial<ConfigParams>) {
   ) {
     return;
   }
-  for (const key in params) {
-    const k = key as keyof typeof params;
-    if (!config.hasOwnProperty(k)) {
-      delete params[k];
+  _merge_defaults(config, params);
+}
+
+function _merge_defaults<T>(defaults: T, partial: DeepPartial<T>) {
+  for (const key in partial) {
+    if (!partial.hasOwnProperty(key)) {
+      delete partial[key];
     }
-    if (typeof params[k] !== typeof config[k]) {
-      delete params[k];
+    if (typeof defaults[key] !== typeof partial[key]) {
+      delete partial[key];
     }
-    // TODO: Imporve it
-    if (config[k] && typeof config[k] === 'object') {
-      for (const [subkey, subvalue] of Object.entries(config[k])) {
-        const params_k = params[k];
-        if (params_k && !params_k.hasOwnProperty(subkey)) {
-          (params_k as any)[subkey] = subvalue as any;
-        }
-      }
+    const pk = partial[key];
+    if (pk && typeof pk === 'object' && pk !== null) {
+      _merge_defaults(defaults[key], pk);
+    } else {
+      defaults[key] = partial[key] as T[typeof key];
     }
   }
-  Object.assign(config, params);
 }

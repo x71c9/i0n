@@ -7,36 +7,36 @@
  */
 
 import * as types from '../types';
-import {COLOR, Color} from '../types/color';
-import {METHOD, Method} from '../types/method';
-import {CONSOLE_METHOD, ConsoleMethod} from '../types/method';
 import {config} from '../config/config';
 
 export function trace(...data: any): void {
-  _print_full_objects(METHOD.TRACE, COLOR.DIM, data);
+  _print_full_objects(types.METHOD.trace, data);
 }
 export function debug(...data: any): void {
-  _print_full_objects(METHOD.DEBUG, COLOR.MAGENTA, data);
+  _print_full_objects(types.METHOD.debug, data);
 }
 export function info(...data: any): void {
-  _print_full_objects(METHOD.INFO, COLOR.CYAN, data);
+  _print_full_objects(types.METHOD.info, data);
 }
 export function warn(...data: any): void {
-  _print_full_objects(METHOD.WARN, COLOR.YELLOW, data);
+  _print_full_objects(types.METHOD.warn, data);
 }
 export function error(...data: any): void {
-  _print_full_objects(METHOD.ERROR, COLOR.RED, data);
+  _print_full_objects(types.METHOD.error, data);
 }
 export function success(...data: any): void {
-  _print_full_objects(METHOD.SUCCESS, COLOR.GREEN, data);
+  _print_full_objects(types.METHOD.success, data);
+}
+export function fail(...data: any): void {
+  _print_full_objects(types.METHOD.fail, data);
 }
 
-function _print_full_objects(method: Method, color: Color, data: any): void {
+function _print_full_objects(method: types.Method, data: any): void {
   let full_log: string[] = [];
   for (const arg of data) {
     full_log.push(_process_data(arg));
   }
-  _print(method, color, full_log.join(' '));
+  _print(method, full_log.join(' '));
 }
 
 function _process_data(data: any): string {
@@ -46,92 +46,99 @@ function _process_data(data: any): string {
   return data;
 }
 
-function _print(method: Method, color: Color, data: any): void {
+function _print(method: types.Method, data: any): void {
   const with_prefix = `${config.prefix}${data}`;
-  const final_data = _paint(color, with_prefix);
+  const final_data = _paint(method, with_prefix);
   return _print_primitive(method, final_data);
 }
 
-function _paint(color: Color, str: string): string {
-  if (_env_no_color_is_true()) {
+function _paint(method: types.Method, str: string): string {
+  if (_env_no_color_is_true() || config.color === false) {
     return str;
   }
-  let style = _get_style_from_color(color);
+  const style = _get_style_from_method(method);
   const styled_log = style + str + _terminal_styles.reset;
   return styled_log;
 }
 
-function _print_primitive(method: Method, data: any): void {
+function _print_primitive(method: types.Method, data: any): void {
   switch (method) {
-    case METHOD.TRACE: {
+    case types.METHOD.trace: {
       if (!_is_traceble(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.TRACE, data);
+      _use_console_method(types.METHOD.trace, data);
       break;
     }
-    case METHOD.DEBUG: {
+    case types.METHOD.debug: {
       if (!_is_debugable(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.DEBUG, data);
+      _use_console_method(types.METHOD.debug, data);
       break;
     }
-    case METHOD.INFO: {
+    case types.METHOD.info: {
       if (!_is_infoble(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.INFO, data);
+      _use_console_method(types.METHOD.info, data);
       break;
     }
-    case METHOD.WARN: {
+    case types.METHOD.warn: {
       if (!_is_warnable(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.WARN, data);
+      _use_console_method(types.METHOD.warn, data);
       break;
     }
-    case METHOD.ERROR: {
+    case types.METHOD.error: {
       if (!_is_errable(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.ERROR, data);
+      _use_console_method(types.METHOD.error, data);
       break;
     }
-    case METHOD.SUCCESS: {
+    case types.METHOD.success: {
       if (!_is_errable(config.log_level)) {
         break;
       }
-      _use_console_method(METHOD.SUCCESS, data);
+      _use_console_method(types.METHOD.success, data);
+      break;
+    }
+    case types.METHOD.fail: {
+      if (!_is_errable(config.log_level)) {
+        break;
+      }
+      _use_console_method(types.METHOD.fail, data);
       break;
     }
   }
 }
 
-function _use_console_method(method: Method, data: any) {
-  const console_method: ConsoleMethod | undefined = config.methods[method];
+function _use_console_method(method: types.Method, data: any) {
+  const console_method: types.ConsoleMethod | undefined = config[method].method;
   switch (console_method) {
-    case CONSOLE_METHOD.TRACE: {
+    case types.CONSOLE_METHOD.trace: {
       console.trace(data);
       break;
     }
-    case CONSOLE_METHOD.DEBUG: {
+    case types.CONSOLE_METHOD.debug: {
       console.debug(data);
       break;
     }
-    case CONSOLE_METHOD.LOG: {
+    case types.CONSOLE_METHOD.log: {
       console.log(data);
       break;
     }
-    case CONSOLE_METHOD.INFO: {
+    case types.CONSOLE_METHOD.info: {
       console.info(data);
       break;
     }
-    case CONSOLE_METHOD.WARN: {
+    case types.CONSOLE_METHOD.warn: {
       console.warn(data);
       break;
     }
-    case CONSOLE_METHOD.ERROR: {
+    case types.CONSOLE_METHOD.error: {
       console.error(data);
       break;
     }
@@ -178,8 +185,76 @@ function _env_no_color_is_true() {
   return env_no_colors;
 }
 
-function _get_style_from_color(color: Color): string {
+function _get_style_from_color(color: types.Color): string {
   return _style[color];
+}
+
+function _get_style_from_method(method: types.Method): string {
+  const color = config[method].color;
+  if (_is_base_color(color)) {
+    return _get_style_from_color(color as types.Color);
+  }
+  const custom_style = _get_style_from_hexadecimal_color(color);
+  if (!custom_style) {
+    return _style.DEFAULT;
+  }
+  return custom_style;
+}
+
+function _is_base_color(color: string): boolean {
+  for (const [_key, value] of Object.entries(types.COLOR)) {
+    if (value === color) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function _get_style_from_hexadecimal_color(color: string): string | undefined {
+  const rgb = _hex_to_rgb(color);
+  const style = `\x1b[38;2;${rgb.r};${rgb.g};${rgb.b}m`;
+  return style;
+}
+
+function _hex_to_rgb(hex: string) {
+  if (hex[0] !== '#') {
+    throw new Error(`Hexadecimal color should start with #`);
+  }
+  if (!_is_valid_hex(hex)) {
+    throw new Error(`Invalid hexadecimal value`);
+  }
+  const processed_hex = _short_hex_to_full_hex(hex);
+  const bigint = parseInt(processed_hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return {r, g, b};
+}
+
+function _is_valid_hex(hex: string): boolean {
+  if (
+    !/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(
+      hex
+    )
+  ) {
+    return false;
+  }
+  const numberic_value = parseInt(hex.slice(1), 16);
+  if (isNaN(numberic_value)) {
+    return false;
+  }
+  return true;
+}
+
+function _short_hex_to_full_hex(hex: string): string {
+  if (!/^#?([0-9A-Fa-f]{3})$/.test(hex)) {
+    return hex;
+  }
+  const r = hex[1];
+  const g = hex[2];
+  const b = hex[3];
+  const full_hex = `#${r}${r}${g}${g}${b}${b}`;
+  return full_hex;
 }
 
 const _terminal_styles = {
@@ -227,7 +302,7 @@ const _terminal_styles = {
 };
 
 type Style = {
-  [k in Color]: string;
+  [k in types.Color]: string;
 };
 
 const _style: Style = {
@@ -238,4 +313,5 @@ const _style: Style = {
   RED: _terminal_styles.fgRed,
   BLACK: _terminal_styles.fgBlack,
   GREEN: _terminal_styles.fgGreen,
+  DEFAULT: _terminal_styles.fgDefault,
 };

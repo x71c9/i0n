@@ -6,20 +6,41 @@
  * @packageDocumentation
  *
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./level"), exports);
+exports.COLOR = exports.CONSOLE_METHOD = exports.METHOD = exports.LOG_LEVEL = void 0;
+exports.LOG_LEVEL = {
+    TRACE: 'TRACE',
+    DEBUG: 'DEBUG',
+    INFO: 'INFO',
+    WARN: 'WARN',
+    ERROR: 'ERROR',
+    NONE: 'NONE',
+};
+exports.METHOD = {
+    info: 'info',
+    debug: 'debug',
+    trace: 'trace',
+    warn: 'warn',
+    error: 'error',
+    success: 'success',
+    fail: 'fail',
+};
+exports.CONSOLE_METHOD = {
+    log: 'log',
+    info: 'info',
+    debug: 'debug',
+    trace: 'trace',
+    warn: 'warn',
+    error: 'error',
+};
+exports.COLOR = {
+    DIM: 'DIM',
+    MAGENTA: 'MAGENTA',
+    CYAN: 'CYAN',
+    YELLOW: 'YELLOW',
+    RED: 'RED',
+    BLACK: 'BLACK',
+    GREEN: 'GREEN',
+    DEFAULT: 'DEFAULT',
+};
 //# sourceMappingURL=index.js.map

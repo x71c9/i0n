@@ -33,9 +33,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = void 0;
+exports.config = exports.COLOR = exports.LOG_LEVEL = void 0;
 __exportStar(require("./log/index"), exports);
-__exportStar(require("./types/index"), exports);
+var index_1 = require("./types/index");
+Object.defineProperty(exports, "LOG_LEVEL", { enumerable: true, get: function () { return index_1.LOG_LEVEL; } });
+Object.defineProperty(exports, "COLOR", { enumerable: true, get: function () { return index_1.COLOR; } });
 const config = __importStar(require("./config/index"));
 exports.config = config;
 //# sourceMappingURL=main.js.map

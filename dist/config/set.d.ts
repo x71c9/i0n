@@ -5,9 +5,10 @@
  * @packageDocumentation
  *
  */
-import { Config } from './config';
-type ConfigParams = {
-    [k in keyof Config]: Config[k];
+import * as types from '../types/index';
+type DeepPartial<T> = {
+    [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
 };
-export declare function set(params: Partial<ConfigParams>): void;
+type ConfigParams = DeepPartial<types.Config>;
+export declare function set(params: ConfigParams): void;
 export {};

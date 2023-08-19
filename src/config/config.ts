@@ -7,28 +7,37 @@
  */
 
 import * as types from '../types/index';
-import {Method} from '../types/method';
-import {CONSOLE_METHOD, ConsoleMethod} from '../types/method';
 
-type Methods = {
-  [k in Method]?: ConsoleMethod;
-};
-
-export type Config = {
-  log_level: types.LogLevel;
-  prefix: string;
-  methods: Methods;
-};
-
-export const config: Config = {
+export const config: types.Config = {
   prefix: '',
   log_level: types.LOG_LEVEL.TRACE,
-  methods: {
-    TRACE: CONSOLE_METHOD.LOG,
-    DEBUG: CONSOLE_METHOD.LOG,
-    INFO: CONSOLE_METHOD.LOG,
-    WARN: CONSOLE_METHOD.WARN,
-    ERROR: CONSOLE_METHOD.ERROR,
-    SUCCESS: CONSOLE_METHOD.LOG,
+  color: true,
+  trace: {
+    method: types.CONSOLE_METHOD.log,
+    color: types.COLOR.DIM,
+  },
+  debug: {
+    method: types.CONSOLE_METHOD.log,
+    color: types.COLOR.MAGENTA,
+  },
+  info: {
+    method: types.CONSOLE_METHOD.log,
+    color: types.COLOR.CYAN,
+  },
+  warn: {
+    method: types.CONSOLE_METHOD.warn,
+    color: types.COLOR.YELLOW,
+  },
+  error: {
+    method: types.CONSOLE_METHOD.error,
+    color: types.COLOR.RED,
+  },
+  success: {
+    method: types.CONSOLE_METHOD.log,
+    color: types.COLOR.GREEN,
+  },
+  fail: {
+    method: types.CONSOLE_METHOD.log,
+    color: types.COLOR.RED,
   },
 };

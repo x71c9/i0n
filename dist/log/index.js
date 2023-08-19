@@ -30,42 +30,43 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.success = exports.error = exports.warn = exports.info = exports.debug = exports.trace = void 0;
+exports.fail = exports.success = exports.error = exports.warn = exports.info = exports.debug = exports.trace = void 0;
 const types = __importStar(require("../types"));
-const color_1 = require("../types/color");
-const method_1 = require("../types/method");
-const method_2 = require("../types/method");
 const config_1 = require("../config/config");
 function trace(...data) {
-    _print_full_objects(method_1.METHOD.TRACE, color_1.COLOR.DIM, data);
+    _print_full_objects(types.METHOD.trace, data);
 }
 exports.trace = trace;
 function debug(...data) {
-    _print_full_objects(method_1.METHOD.DEBUG, color_1.COLOR.MAGENTA, data);
+    _print_full_objects(types.METHOD.debug, data);
 }
 exports.debug = debug;
 function info(...data) {
-    _print_full_objects(method_1.METHOD.INFO, color_1.COLOR.CYAN, data);
+    _print_full_objects(types.METHOD.info, data);
 }
 exports.info = info;
 function warn(...data) {
-    _print_full_objects(method_1.METHOD.WARN, color_1.COLOR.YELLOW, data);
+    _print_full_objects(types.METHOD.warn, data);
 }
 exports.warn = warn;
 function error(...data) {
-    _print_full_objects(method_1.METHOD.ERROR, color_1.COLOR.RED, data);
+    _print_full_objects(types.METHOD.error, data);
 }
 exports.error = error;
 function success(...data) {
-    _print_full_objects(method_1.METHOD.SUCCESS, color_1.COLOR.GREEN, data);
+    _print_full_objects(types.METHOD.success, data);
 }
 exports.success = success;
-function _print_full_objects(method, color, data) {
+function fail(...data) {
+    _print_full_objects(types.METHOD.fail, data);
+}
+exports.fail = fail;
+function _print_full_objects(method, data) {
     let full_log = [];
     for (const arg of data) {
         full_log.push(_process_data(arg));
     }
-    _print(method, color, full_log.join(' '));
+    _print(method, full_log.join(' '));
 }
 function _process_data(data) {
     if (typeof data === 'object' && data !== null) {
@@ -73,89 +74,96 @@ function _process_data(data) {
     }
     return data;
 }
-function _print(method, color, data) {
+function _print(method, data) {
     const with_prefix = `${config_1.config.prefix}${data}`;
-    const final_data = _paint(color, with_prefix);
+    const final_data = _paint(method, with_prefix);
     return _print_primitive(method, final_data);
 }
-function _paint(color, str) {
-    if (_env_no_color_is_true()) {
+function _paint(method, str) {
+    if (_env_no_color_is_true() || config_1.config.color === false) {
         return str;
     }
-    let style = _get_style_from_color(color);
+    const style = _get_style_from_method(method);
     const styled_log = style + str + _terminal_styles.reset;
     return styled_log;
 }
 function _print_primitive(method, data) {
     switch (method) {
-        case method_1.METHOD.TRACE: {
+        case types.METHOD.trace: {
             if (!_is_traceble(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.TRACE, data);
+            _use_console_method(types.METHOD.trace, data);
             break;
         }
-        case method_1.METHOD.DEBUG: {
+        case types.METHOD.debug: {
             if (!_is_debugable(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.DEBUG, data);
+            _use_console_method(types.METHOD.debug, data);
             break;
         }
-        case method_1.METHOD.INFO: {
+        case types.METHOD.info: {
             if (!_is_infoble(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.INFO, data);
+            _use_console_method(types.METHOD.info, data);
             break;
         }
-        case method_1.METHOD.WARN: {
+        case types.METHOD.warn: {
             if (!_is_warnable(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.WARN, data);
+            _use_console_method(types.METHOD.warn, data);
             break;
         }
-        case method_1.METHOD.ERROR: {
+        case types.METHOD.error: {
             if (!_is_errable(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.ERROR, data);
+            _use_console_method(types.METHOD.error, data);
             break;
         }
-        case method_1.METHOD.SUCCESS: {
+        case types.METHOD.success: {
             if (!_is_errable(config_1.config.log_level)) {
                 break;
             }
-            _use_console_method(method_1.METHOD.SUCCESS, data);
+            _use_console_method(types.METHOD.success, data);
+            break;
+        }
+        case types.METHOD.fail: {
+            if (!_is_errable(config_1.config.log_level)) {
+                break;
+            }
+            _use_console_method(types.METHOD.fail, data);
             break;
         }
     }
 }
 function _use_console_method(method, data) {
-    const console_method = config_1.config.methods[method];
+    const console_method = config_1.config[method].method;
     switch (console_method) {
-        case method_2.CONSOLE_METHOD.TRACE: {
+        case types.CONSOLE_METHOD.trace: {
             console.trace(data);
             break;
         }
-        case method_2.CONSOLE_METHOD.DEBUG: {
+        case types.CONSOLE_METHOD.debug: {
             console.debug(data);
             break;
         }
-        case method_2.CONSOLE_METHOD.LOG: {
+        case types.CONSOLE_METHOD.log: {
             console.log(data);
             break;
         }
-        case method_2.CONSOLE_METHOD.INFO: {
+        case types.CONSOLE_METHOD.info: {
             console.info(data);
             break;
         }
-        case method_2.CONSOLE_METHOD.WARN: {
+        case types.CONSOLE_METHOD.warn: {
             console.warn(data);
             break;
         }
-        case method_2.CONSOLE_METHOD.ERROR: {
+        case types.CONSOLE_METHOD.error: {
             console.error(data);
             break;
         }
@@ -197,6 +205,64 @@ function _env_no_color_is_true() {
 }
 function _get_style_from_color(color) {
     return _style[color];
+}
+function _get_style_from_method(method) {
+    const color = config_1.config[method].color;
+    if (_is_base_color(color)) {
+        return _get_style_from_color(color);
+    }
+    const custom_style = _get_style_from_hexadecimal_color(color);
+    if (!custom_style) {
+        return _style.DEFAULT;
+    }
+    return custom_style;
+}
+function _is_base_color(color) {
+    for (const [_key, value] of Object.entries(types.COLOR)) {
+        if (value === color) {
+            return true;
+        }
+    }
+    return false;
+}
+function _get_style_from_hexadecimal_color(color) {
+    const rgb = _hex_to_rgb(color);
+    const style = `\x1b[38;2;${rgb.r};${rgb.g};${rgb.b}m`;
+    return style;
+}
+function _hex_to_rgb(hex) {
+    if (hex[0] !== '#') {
+        throw new Error(`Hexadecimal color should start with #`);
+    }
+    if (!_is_valid_hex(hex)) {
+        throw new Error(`Invalid hexadecimal value`);
+    }
+    const processed_hex = _short_hex_to_full_hex(hex);
+    const bigint = parseInt(processed_hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+}
+function _is_valid_hex(hex) {
+    if (!/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(hex)) {
+        return false;
+    }
+    const numberic_value = parseInt(hex.slice(1), 16);
+    if (isNaN(numberic_value)) {
+        return false;
+    }
+    return true;
+}
+function _short_hex_to_full_hex(hex) {
+    if (!/^#?([0-9A-Fa-f]{3})$/.test(hex)) {
+        return hex;
+    }
+    const r = hex[1];
+    const g = hex[2];
+    const b = hex[3];
+    const full_hex = `#${r}${r}${g}${g}${b}${b}`;
+    return full_hex;
 }
 const _terminal_styles = {
     'reset': '\x1b[0m',
@@ -249,5 +315,6 @@ const _style = {
     RED: _terminal_styles.fgRed,
     BLACK: _terminal_styles.fgBlack,
     GREEN: _terminal_styles.fgGreen,
+    DEFAULT: _terminal_styles.fgDefault,
 };
 //# sourceMappingURL=index.js.map
