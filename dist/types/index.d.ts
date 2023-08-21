@@ -9,6 +9,7 @@ import { ObjectValue } from './utils.js';
 export type MethodConfig = {
     method: ConsoleMethod;
     color: string;
+    prefix: string;
 };
 export type Config = {
     log_level: LogLevel;
@@ -27,9 +28,9 @@ export declare const LOG_LEVEL: {
 };
 export type LogLevel = ObjectValue<typeof LOG_LEVEL>;
 export declare const METHOD: {
-    readonly info: "info";
-    readonly debug: "debug";
     readonly trace: "trace";
+    readonly debug: "debug";
+    readonly info: "info";
     readonly warn: "warn";
     readonly error: "error";
     readonly success: "success";

@@ -47,7 +47,8 @@ function _process_data(data: any): string {
 }
 
 function _print(method: types.Method, data: any): void {
-  const with_prefix = `${config.prefix}${data}`;
+  const method_prefix = _get_prefix_from_method(method);
+  const with_prefix = `${config.prefix}${method_prefix}${data}`;
   const final_data = _paint(method, with_prefix);
   return _print_primitive(method, final_data);
 }
@@ -99,14 +100,14 @@ function _print_primitive(method: types.Method, data: any): void {
       break;
     }
     case types.METHOD.success: {
-      if (!_is_errable(config.log_level)) {
+      if (!_is_infoble(config.log_level)) {
         break;
       }
       _use_console_method(types.METHOD.success, data);
       break;
     }
     case types.METHOD.fail: {
-      if (!_is_errable(config.log_level)) {
+      if (!_is_infoble(config.log_level)) {
         break;
       }
       _use_console_method(types.METHOD.fail, data);
@@ -199,6 +200,11 @@ function _get_style_from_method(method: types.Method): string {
     return _style.DEFAULT;
   }
   return custom_style;
+}
+
+function _get_prefix_from_method(method: types.Method): string {
+  const prefix = config[method].prefix;
+  return prefix;
 }
 
 function _is_base_color(color: string): boolean {

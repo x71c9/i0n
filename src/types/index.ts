@@ -11,6 +11,7 @@ import {ObjectValue} from './utils.js';
 export type MethodConfig = {
   method: ConsoleMethod;
   color: string;
+  prefix: string;
 };
 
 export type Config = {
@@ -33,9 +34,9 @@ export const LOG_LEVEL = {
 export type LogLevel = ObjectValue<typeof LOG_LEVEL>;
 
 export const METHOD = {
-  info: 'info',
-  debug: 'debug',
   trace: 'trace',
+  debug: 'debug',
+  info: 'info',
   warn: 'warn',
   error: 'error',
   success: 'success',

@@ -14,9 +14,9 @@ export const LOG_LEVEL = {
     NONE: 'NONE',
 };
 export const METHOD = {
-    info: 'info',
-    debug: 'debug',
     trace: 'trace',
+    debug: 'debug',
+    info: 'info',
     warn: 'warn',
     error: 'error',
     success: 'success',

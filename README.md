@@ -59,12 +59,10 @@ ion.config.set({
 ```typescript
 import ion from 'i0n';
 
-ion.spinner.text = 'Loading...'
+ion.spinner.text('Loading...');
 ion.spinner.start();
 
 setTimeout(() => {
     ion.spinner.stop();
 }, 4000);
 ```
-
-The spinner it is just a weapper to [`ora`](https://www.npmjs.com/package/ora)

@@ -15,29 +15,36 @@ export const config: types.Config = {
   trace: {
     method: types.CONSOLE_METHOD.log,
     color: types.COLOR.DIM,
+    prefix: '',
   },
   debug: {
     method: types.CONSOLE_METHOD.log,
     color: types.COLOR.MAGENTA,
+    prefix: '',
   },
   info: {
     method: types.CONSOLE_METHOD.log,
     color: types.COLOR.CYAN,
+    prefix: '',
   },
   warn: {
     method: types.CONSOLE_METHOD.warn,
     color: types.COLOR.YELLOW,
+    prefix: '',
   },
   error: {
     method: types.CONSOLE_METHOD.error,
     color: types.COLOR.RED,
+    prefix: '',
   },
   success: {
     method: types.CONSOLE_METHOD.log,
     color: types.COLOR.GREEN,
+    prefix: '✔ ',
   },
   fail: {
     method: types.CONSOLE_METHOD.log,
     color: types.COLOR.RED,
+    prefix: '✘ ',
   },
 };

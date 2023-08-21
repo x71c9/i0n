@@ -6,39 +6,7 @@
 
 import ion from './index.js';
 
-ion.config.set({
-  // log_level: ion.LOG_LEVEL.TRACE,
-  // color: true,
-  // prefix: 'x71c9 ',
-  // trace: {
-  //   method: 'log',
-  //   color: '#999',
-  // },
-  // debug: {
-  //   method: 'debug',
-  //   color: '#CDCDCD',
-  // },
-  // info: {
-  //   method: 'info',
-  //   color: '#99F',
-  // },
-  // warn: {
-  //   method: 'warn',
-  //   color: '#FF7700',
-  // },
-  // error: {
-  //   method: 'error',
-  //   color: '#DD1122',
-  // },
-  // success: {
-  //   method: 'log',
-  //   color: '#55DD88',
-  // },
-  // fail: {
-  //   method: 'log',
-  //   color: '#770000',
-  // },
-});
+ion.config.set({});
 
 ion.trace(`trace`);
 ion.debug(`debug`);
@@ -47,4 +15,9 @@ ion.warn(`warn`);
 ion.error(`error`);
 ion.success(`success`);
 ion.fail(`fail`);
+let text = `Loading`;
+for (let i = 0; i < 20; i++) {
+  text += ` ` + text;
+}
+ion.spinner.text(text);
 ion.spinner.start();
