@@ -18,6 +18,7 @@ export type Config = {
   log_level: LogLevel;
   prefix: string;
   color: boolean;
+  force_spin: boolean;
 } & {
   [k in Method]: MethodConfig;
 };

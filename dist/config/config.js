@@ -10,6 +10,7 @@ export const config = {
     prefix: '',
     log_level: types.LOG_LEVEL.TRACE,
     color: true,
+    force_spin: false,
     trace: {
         method: types.CONSOLE_METHOD.log,
         color: types.COLOR.DIM,

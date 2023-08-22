@@ -7,6 +7,7 @@
  */
 import * as types from '../types/index.js';
 import { config } from '../config/config.js';
+import * as log_utils from './utils.js';
 export function trace(...data) {
     _print_full_objects(types.METHOD.trace, data);
 }
@@ -58,49 +59,49 @@ function _paint(method, str) {
 function _print_primitive(method, data) {
     switch (method) {
         case types.METHOD.trace: {
-            if (!_is_traceble(config.log_level)) {
+            if (!log_utils._is_traceble(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.trace, data);
             break;
         }
         case types.METHOD.debug: {
-            if (!_is_debugable(config.log_level)) {
+            if (!log_utils._is_debugable(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.debug, data);
             break;
         }
         case types.METHOD.info: {
-            if (!_is_infoble(config.log_level)) {
+            if (!log_utils._is_infoble(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.info, data);
             break;
         }
         case types.METHOD.warn: {
-            if (!_is_warnable(config.log_level)) {
+            if (!log_utils._is_warnable(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.warn, data);
             break;
         }
         case types.METHOD.error: {
-            if (!_is_errable(config.log_level)) {
+            if (!log_utils._is_errable(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.error, data);
             break;
         }
         case types.METHOD.success: {
-            if (!_is_infoble(config.log_level)) {
+            if (!log_utils._is_infoble(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.success, data);
             break;
         }
         case types.METHOD.fail: {
-            if (!_is_infoble(config.log_level)) {
+            if (!log_utils._is_infoble(config.log_level)) {
                 break;
             }
             _use_console_method(types.METHOD.fail, data);
@@ -136,36 +137,6 @@ function _use_console_method(method, data) {
             break;
         }
     }
-}
-function _is_traceble(log_level) {
-    if (log_level === types.LOG_LEVEL.TRACE) {
-        return true;
-    }
-    return false;
-}
-function _is_debugable(log_level) {
-    if (_is_traceble(log_level) || log_level === types.LOG_LEVEL.DEBUG) {
-        return true;
-    }
-    return false;
-}
-function _is_infoble(log_level) {
-    if (_is_debugable(log_level) || log_level === types.LOG_LEVEL.INFO) {
-        return true;
-    }
-    return false;
-}
-function _is_warnable(log_level) {
-    if (_is_infoble(log_level) || log_level === types.LOG_LEVEL.WARN) {
-        return true;
-    }
-    return false;
-}
-function _is_errable(log_level) {
-    if (_is_warnable(log_level) || log_level === types.LOG_LEVEL.ERROR) {
-        return true;
-    }
-    return false;
 }
 function _env_no_color_is_true() {
     const env_no_colors = process.env.NO_COLOR == 'true' ? true : false;
