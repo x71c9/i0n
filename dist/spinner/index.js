@@ -10,13 +10,13 @@ import { config } from '../config/config.js';
 import * as log_utils from '../log/utils.js';
 const ora_spinner = ora({
     color: 'white',
-    interval: 48
+    interval: 48,
 });
 export const spinner = {
     text: _set_text,
     start: _start,
     stop: _stop,
-    is_spinning: _is_spinning
+    is_spinning: _is_spinning,
 };
 function _is_spinning() {
     return ora_spinner.isSpinning;
