@@ -7,8 +7,9 @@
  */
 
 import * as types from '../types/index.js';
-import {config} from '../config/config.js';
 import * as log_utils from './utils.js';
+import {spinner} from '../spinner/index.js';
+import {config} from '../config/config.js';
 
 export function trace(...data: any): void {
   _print_full_objects(types.METHOD.trace, data);
@@ -51,7 +52,23 @@ function _print(method: types.Method, data: any): void {
   const method_prefix = _get_prefix_from_method(method);
   const with_prefix = `${config.prefix}${method_prefix}${data}`;
   const final_data = _paint(method, with_prefix);
-  return _print_primitive(method, final_data);
+  const was_spinning = _stop_spinning();
+  _print_primitive(method, final_data);
+  _start_spinning(was_spinning);
+}
+
+function _stop_spinning() {
+  const was_spinning = spinner.is_spinning();
+  if (was_spinning) {
+    spinner.stop();
+  }
+  return was_spinning;
+}
+
+function _start_spinning(was_spinning: boolean) {
+  if (was_spinning) {
+    spinner.start();
+  }
 }
 
 function _paint(method: types.Method, str: string): string {

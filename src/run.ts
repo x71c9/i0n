@@ -21,3 +21,10 @@ for (let i = 0; i < 20; i++) {
 }
 ion.spinner.text(text);
 ion.spinner.start();
+setTimeout(function () {
+  ion.warn('watch out');
+}, 2000);
+setTimeout(function () {
+  ion.spinner.stop();
+  ion.success('it is a success');
+}, 6000);
