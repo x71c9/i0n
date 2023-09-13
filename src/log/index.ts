@@ -11,26 +11,37 @@ import * as log_utils from './utils.js';
 import {spinner} from '../spinner/index.js';
 import {config} from '../config/config.js';
 
-export function trace(...data: any): void {
+export async function trace(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function debug(...data: any): void {
+export async function debug(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.debug, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function info(...data: any): void {
+export async function info(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.info, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function warn(...data: any): void {
+export async function warn(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.warn, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function error(...data: any): void {
+export async function error(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.error, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function success(...data: any): void {
+export async function success(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.success, data);
+  await _run_inject(types.METHOD.trace, data);
 }
-export function fail(...data: any): void {
+export async function fail(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.fail, data);
+  await _run_inject(types.METHOD.trace, data);
+}
+
+async function _run_inject(method: types.Method, data: any) {
+  await config[method].inject(...data);
 }
 
 function _print_full_objects(method: types.Method, data: any): void {

@@ -9,26 +9,36 @@ import * as types from '../types/index.js';
 import * as log_utils from './utils.js';
 import { spinner } from '../spinner/index.js';
 import { config } from '../config/config.js';
-export function trace(...data) {
+export async function trace(...data) {
     _print_full_objects(types.METHOD.trace, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function debug(...data) {
+export async function debug(...data) {
     _print_full_objects(types.METHOD.debug, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function info(...data) {
+export async function info(...data) {
     _print_full_objects(types.METHOD.info, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function warn(...data) {
+export async function warn(...data) {
     _print_full_objects(types.METHOD.warn, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function error(...data) {
+export async function error(...data) {
     _print_full_objects(types.METHOD.error, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function success(...data) {
+export async function success(...data) {
     _print_full_objects(types.METHOD.success, data);
+    await _run_inject(types.METHOD.trace, data);
 }
-export function fail(...data) {
+export async function fail(...data) {
     _print_full_objects(types.METHOD.fail, data);
+    await _run_inject(types.METHOD.trace, data);
+}
+async function _run_inject(method, data) {
+    await config[method].inject(...data);
 }
 function _print_full_objects(method, data) {
     let full_log = [];

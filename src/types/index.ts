@@ -12,7 +12,10 @@ export type MethodConfig = {
   method: ConsoleMethod;
   color: string;
   prefix: string;
+  inject: InjectMethod;
 };
+
+export type InjectMethod = (...data: any) => Promise<void>;
 
 export type Config = {
   log_level: LogLevel;
