@@ -17,27 +17,27 @@ export async function trace(...data: any): Promise<void> {
 }
 export async function debug(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.debug, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.debug, data);
 }
 export async function info(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.info, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.info, data);
 }
 export async function warn(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.warn, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.warn, data);
 }
 export async function error(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.error, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.error, data);
 }
 export async function success(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.success, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.success, data);
 }
 export async function fail(...data: any): Promise<void> {
   _print_full_objects(types.METHOD.fail, data);
-  await _run_inject(types.METHOD.trace, data);
+  await _run_inject(types.METHOD.fail, data);
 }
 
 async function _run_inject(method: types.Method, data: any) {
