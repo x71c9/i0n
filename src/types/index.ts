@@ -8,6 +8,15 @@
 
 import {ObjectValue} from './utils.js';
 
+export type IONParams = {
+  log_level: LogLevel;
+  prefix: string;
+  color: boolean;
+  force_spin: boolean;
+} & {
+  [k in Method]: MethodConfig;
+};
+
 export type MethodConfig = {
   method: ConsoleMethod;
   color: string;
@@ -16,15 +25,6 @@ export type MethodConfig = {
 };
 
 export type InjectMethod = (...data: any) => Promise<void>;
-
-export type Config = {
-  log_level: LogLevel;
-  prefix: string;
-  color: boolean;
-  force_spin: boolean;
-} & {
-  [k in Method]: MethodConfig;
-};
 
 export const LOG_LEVEL = {
   TRACE: 'TRACE',

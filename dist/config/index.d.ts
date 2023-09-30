@@ -5,4 +5,3 @@
  * @packageDocumentation
  *
  */
-export * from './set.js';

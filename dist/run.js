@@ -3,8 +3,8 @@
  * Run module
  *
  */
-import ion from './index.js';
-ion.config.set({});
+import i0n from './index.js';
+export const ion = i0n.create({});
 ion.trace(`trace`);
 ion.debug(`debug`);
 ion.info(`info`);

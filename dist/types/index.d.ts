@@ -6,14 +6,7 @@
  *
  */
 import { ObjectValue } from './utils.js';
-export type MethodConfig = {
-    method: ConsoleMethod;
-    color: string;
-    prefix: string;
-    inject: InjectMethod;
-};
-export type InjectMethod = (...data: any) => Promise<void>;
-export type Config = {
+export type IONParams = {
     log_level: LogLevel;
     prefix: string;
     color: boolean;
@@ -21,6 +14,13 @@ export type Config = {
 } & {
     [k in Method]: MethodConfig;
 };
+export type MethodConfig = {
+    method: ConsoleMethod;
+    color: string;
+    prefix: string;
+    inject: InjectMethod;
+};
+export type InjectMethod = (...data: any) => Promise<void>;
 export declare const LOG_LEVEL: {
     readonly TRACE: "TRACE";
     readonly DEBUG: "DEBUG";

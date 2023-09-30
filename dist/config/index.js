@@ -1,3 +1,4 @@
+"use strict";
 /**
  *
  * Config module
@@ -5,5 +6,5 @@
  * @packageDocumentation
  *
  */
-export * from './set.js';
+// export * from './set.js';
 //# sourceMappingURL=index.js.map

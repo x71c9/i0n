@@ -3,4 +3,4 @@
  * Run module
  *
  */
-export {};
+export declare const ion: import("./class/index.js").ION;
