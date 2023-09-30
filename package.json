@@ -1,6 +1,6 @@
 {
   "name": "i0n",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A NodeJS library for logging",
   "main": "dist/index.js",
   "type": "module",
