@@ -15,6 +15,6 @@ type DeepPartial<T> = {
 
 type CreateParams = DeepPartial<types.IONParams>;
 
-export function create(params: CreateParams) {
+export function create(params?: CreateParams) {
   return new ION(params);
 }

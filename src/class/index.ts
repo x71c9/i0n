@@ -69,7 +69,7 @@ export class ION {
       inject: async (..._: any) => {},
     },
   };
-  constructor(params: IONConstructorParams) {
+  constructor(params?: IONConstructorParams) {
     if (
       !params ||
       typeof params !== 'object' ||

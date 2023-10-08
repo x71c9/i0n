@@ -12,7 +12,7 @@ type DeepPartial<T> = {
 type IONConstructorParams = DeepPartial<types.IONParams>;
 export declare class ION {
     params: types.IONParams;
-    constructor(params: IONConstructorParams);
+    constructor(params?: IONConstructorParams);
     trace(...data: any): Promise<void>;
     debug(...data: any): Promise<void>;
     info(...data: any): Promise<void>;
