@@ -3,7 +3,6 @@
   "version": "0.6.1",
   "description": "A NodeJS library for logging",
   "main": "dist/index.js",
-  "type": "module",
   "repository": "git@github.com:x71c9/i0n.git",
   "author": "x71c9 <108585118+x71c9@users.noreply.github.com>",
   "license": "UNLICENSED",

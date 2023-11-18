@@ -1,3 +1,4 @@
+"use strict";
 /**
  *
  * Types index module
@@ -5,7 +6,9 @@
  * @packageDocumentation
  *
  */
-export const LOG_LEVEL = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.COLOR = exports.CONSOLE_METHOD = exports.METHOD = exports.LOG_LEVEL = void 0;
+exports.LOG_LEVEL = {
     TRACE: 'TRACE',
     DEBUG: 'DEBUG',
     INFO: 'INFO',
@@ -13,7 +16,7 @@ export const LOG_LEVEL = {
     ERROR: 'ERROR',
     NONE: 'NONE',
 };
-export const METHOD = {
+exports.METHOD = {
     trace: 'trace',
     debug: 'debug',
     info: 'info',
@@ -22,7 +25,7 @@ export const METHOD = {
     success: 'success',
     fail: 'fail',
 };
-export const CONSOLE_METHOD = {
+exports.CONSOLE_METHOD = {
     log: 'log',
     info: 'info',
     debug: 'debug',
@@ -30,7 +33,7 @@ export const CONSOLE_METHOD = {
     warn: 'warn',
     error: 'error',
 };
-export const COLOR = {
+exports.COLOR = {
     DIM: 'DIM',
     MAGENTA: 'MAGENTA',
     CYAN: 'CYAN',
