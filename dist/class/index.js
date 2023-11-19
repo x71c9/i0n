@@ -33,14 +33,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ION = void 0;
+exports.Ion = void 0;
 const ora_classic_1 = __importDefault(require("ora-classic"));
 const types = __importStar(require("../types/index.js"));
 const ora_spinner = (0, ora_classic_1.default)({
     color: 'white',
     interval: 48,
 });
-class ION {
+class Ion {
     constructor(params) {
         this.params = {
             prefix: '',
@@ -313,7 +313,7 @@ class ION {
         return false;
     }
 }
-exports.ION = ION;
+exports.Ion = Ion;
 function _is_spinning() {
     return ora_spinner.isSpinning;
 }

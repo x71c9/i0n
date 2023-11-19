@@ -13,15 +13,15 @@ type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
 };
 
-type IONConstructorParams = DeepPartial<types.IONParams>;
+type IonConstructorParams = DeepPartial<types.IonParams>;
 
 const ora_spinner = ora({
   color: 'white',
   interval: 48,
 });
 
-export class ION {
-  public params: types.IONParams = {
+export class Ion {
+  public params: types.IonParams = {
     prefix: '',
     log_level: types.LOG_LEVEL.TRACE,
     color: true,
@@ -69,7 +69,7 @@ export class ION {
       inject: async (..._: any) => {},
     },
   };
-  constructor(params?: IONConstructorParams) {
+  constructor(params?: IonConstructorParams) {
     if (
       !params ||
       typeof params !== 'object' ||

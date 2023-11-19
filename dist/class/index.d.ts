@@ -9,10 +9,10 @@ import * as types from '../types/index.js';
 type DeepPartial<T> = {
     [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
 };
-type IONConstructorParams = DeepPartial<types.IONParams>;
-export declare class ION {
-    params: types.IONParams;
-    constructor(params?: IONConstructorParams);
+type IonConstructorParams = DeepPartial<types.IonParams>;
+export declare class Ion {
+    params: types.IonParams;
+    constructor(params?: IonConstructorParams);
     trace(...data: any): Promise<void>;
     debug(...data: any): Promise<void>;
     info(...data: any): Promise<void>;
