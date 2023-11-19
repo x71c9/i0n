@@ -6,7 +6,7 @@
  *
  */
 
-import ora from 'ora';
+import ora from 'ora-classic';
 import * as types from '../types/index.js';
 
 type DeepPartial<T> = {

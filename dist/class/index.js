@@ -34,9 +34,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ION = void 0;
-const ora_1 = __importDefault(require("ora"));
+const ora_classic_1 = __importDefault(require("ora-classic"));
 const types = __importStar(require("../types/index.js"));
-const ora_spinner = (0, ora_1.default)({
+const ora_spinner = (0, ora_classic_1.default)({
     color: 'white',
     interval: 48,
 });
