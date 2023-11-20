@@ -6,6 +6,7 @@
  *
  */
 import { ObjectValue } from './utils.js';
+export type Config = {};
 export type IonParams = {
     log_level: LogLevel;
     prefix: string;

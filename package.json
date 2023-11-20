@@ -49,6 +49,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "ora-classic": "^5.4.2"
+    "ora-classic": "^5.4.2",
+    "w3i": "^0.2.0"
   }
 }

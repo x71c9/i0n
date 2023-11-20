@@ -2,27 +2,42 @@
 
 A typescript library for console logging.
 
-## How to use it
+## Implementation
+
+A common implementation is the following:
 
 ```typescript
+// src/log/index.ts
 import ion from 'i0n';
-ion.trace(`trace`);
-ion.debug(`debug`);
-ion.info(`info`);
-ion.warn(`warn`);
-ion.error(`error`);
-ion.success(`success`);
-ion.fail(`fail`);
+
+export const log = ion.create({
+  log_level: ion.LOG_LEVEL.NONE,
+});
 ```
 
-## Configuration
+```typescript
+// src/business.ts
+import {log} from './log/index.js';
+
+log.trace(`trace`);
+log.debug(`debug`);
+log.info(`info`);
+log.warn(`warn`);
+log.error(`error`);
+log.success(`success`);
+log.fail(`fail`);
+```
+
+## Full configuration
 
 ```typescript
 import ion from 'i0n';
-ion.config.set({
+
+ion.create({
   log_level: ion.LOG_LEVEL.WARN,
   color: false,
   prefix: '[myapp] ',
+  force_spin: false,
   trace: {
     method: 'trace',
     color: '#999',
@@ -63,6 +78,23 @@ ion.spinner.text('Loading...');
 ion.spinner.start();
 
 setTimeout(() => {
-    ion.spinner.stop();
+  ion.spinner.stop();
 }, 4000);
 ```
+
+## Unix philosophy
+
+This repo try to follow the
+[Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy).
+
+## Name
+
+`i0n` stands for ion, like in [Ion](https://en.wikipedia.org/wiki/Ion).
+
+## Other related repositories
+
+[`3xp`](https://www.npmjs.com/package/3xp) A typescript library for validating objects.
+
+[`r4y`](https://www.npmjs.com/package/r4y) A typescript library for managing child processes.
+
+[`w3i`](https://www.npmjs.com/package/w3i) A typescript library for handling configurations.
