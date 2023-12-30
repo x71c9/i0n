@@ -89,13 +89,20 @@ class Ion {
                 prefix: '✘ ',
                 inject: async (..._) => { },
             },
+            spinner: {
+                text: _set_text,
+                start: this._start.bind(this),
+                stop: _stop,
+                is_spinning: _is_spinning,
+            }
         };
-        this.spinner = {
-            text: _set_text,
-            start: this._start.bind(this),
-            stop: _stop,
-            is_spinning: _is_spinning,
-        };
+        // public spinner: types.Spinner = {
+        //   text: _set_text,
+        //   start: this._start.bind(this),
+        //   stop: _stop,
+        //   is_spinning: _is_spinning,
+        // };
+        this.spinner = this.params.spinner;
         if (!params ||
             typeof params !== 'object' ||
             Object.entries(params).length === 0) {

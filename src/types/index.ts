@@ -15,6 +15,7 @@ export type IonParams = {
   prefix: string;
   color: boolean;
   force_spin: boolean;
+  spinner: Spinner;
 } & {
   [k in Method]: MethodConfig;
 };

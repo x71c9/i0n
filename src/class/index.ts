@@ -68,6 +68,12 @@ export class Ion {
       prefix: '✘ ',
       inject: async (..._: any) => {},
     },
+    spinner: {
+      text: _set_text,
+      start: this._start.bind(this),
+      stop: _stop,
+      is_spinning: _is_spinning,
+    },
   };
   constructor(params?: IonConstructorParams) {
     if (
@@ -108,12 +114,14 @@ export class Ion {
     await this._run_inject(types.METHOD.fail, data);
   }
 
-  public spinner: types.Spinner = {
-    text: _set_text,
-    start: this._start.bind(this),
-    stop: _stop,
-    is_spinning: _is_spinning,
-  };
+  // public spinner: types.Spinner = {
+  //   text: _set_text,
+  //   start: this._start.bind(this),
+  //   stop: _stop,
+  //   is_spinning: _is_spinning,
+  // };
+
+  public spinner: types.Spinner = this.params.spinner;
 
   private _start() {
     if (this._is_infoble() || this.params.force_spin === true) {
