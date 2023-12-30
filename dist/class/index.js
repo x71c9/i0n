@@ -94,7 +94,7 @@ class Ion {
                 start: this._start.bind(this),
                 stop: _stop,
                 is_spinning: _is_spinning,
-            }
+            },
         };
         // public spinner: types.Spinner = {
         //   text: _set_text,
