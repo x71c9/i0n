@@ -108,7 +108,7 @@ export class Ion {
     await this._run_inject(types.METHOD.fail, data);
   }
 
-  public spinner = {
+  public spinner: types.Spinner = {
     text: _set_text,
     start: this._start.bind(this),
     stop: _stop,

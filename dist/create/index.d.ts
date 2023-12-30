@@ -5,8 +5,8 @@
  * @packageDocumentation
  *
  */
-import * as types from '../types/index.js';
-import { Ion } from '../class/index.js';
+import * as types from '../types/index';
+import { Ion } from '../class/index';
 type DeepPartial<T> = {
     [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
 };

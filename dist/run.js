@@ -9,8 +9,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ion = void 0;
-const index_js_1 = __importDefault(require("./index.js"));
-exports.ion = index_js_1.default.create({});
+const index_1 = __importDefault(require("./index"));
+exports.ion = index_1.default.create({});
 exports.ion.trace(`trace`);
 exports.ion.debug(`debug`);
 exports.ion.info(`info`);

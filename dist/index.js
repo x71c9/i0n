@@ -30,6 +30,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const i0n = __importStar(require("./main.js"));
+const i0n = __importStar(require("./main"));
 exports.default = i0n;
 //# sourceMappingURL=index.js.map

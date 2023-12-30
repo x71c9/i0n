@@ -4,7 +4,7 @@
  *
  */
 
-import i0n from './index.js';
+import i0n from './index';
 export const ion = i0n.create({});
 
 ion.trace(`trace`);

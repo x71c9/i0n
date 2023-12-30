@@ -5,7 +5,7 @@
  * @packageDocumentation
  *
  */
-import { ObjectValue } from './utils.js';
+import { ObjectValue } from './utils';
 export type Config = {};
 export type IonParams = {
     log_level: LogLevel;
@@ -61,3 +61,9 @@ export declare const COLOR: {
     readonly DEFAULT: "DEFAULT";
 };
 export type Color = ObjectValue<typeof COLOR>;
+export type Spinner = {
+    text: (text: string) => void;
+    start: () => void;
+    stop: () => void;
+    is_spinning: () => boolean;
+};

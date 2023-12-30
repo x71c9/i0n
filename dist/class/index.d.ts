@@ -20,12 +20,7 @@ export declare class Ion {
     error(...data: any): Promise<void>;
     success(...data: any): Promise<void>;
     fail(...data: any): Promise<void>;
-    spinner: {
-        text: typeof _set_text;
-        start: () => void;
-        stop: typeof _stop;
-        is_spinning: typeof _is_spinning;
-    };
+    spinner: types.Spinner;
     private _start;
     private _run_inject;
     private _print_full_objects;
@@ -44,7 +39,4 @@ export declare class Ion {
     private _is_warnable;
     private _is_errable;
 }
-declare function _is_spinning(): boolean;
-declare function _set_text(text: string): void;
-declare function _stop(): void;
 export {};

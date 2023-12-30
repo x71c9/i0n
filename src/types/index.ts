@@ -6,7 +6,7 @@
  *
  */
 
-import {ObjectValue} from './utils.js';
+import {ObjectValue} from './utils';
 
 export type Config = {};
 
@@ -74,3 +74,10 @@ export const COLOR = {
 } as const;
 
 export type Color = ObjectValue<typeof COLOR>;
+
+export type Spinner = {
+  text: (text: string) => void;
+  start: () => void;
+  stop: () => void;
+  is_spinning: () => boolean;
+};

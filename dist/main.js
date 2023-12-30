@@ -22,8 +22,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.COLOR = exports.LOG_LEVEL = void 0;
-__exportStar(require("./create/index.js"), exports);
-var index_js_1 = require("./types/index.js");
-Object.defineProperty(exports, "LOG_LEVEL", { enumerable: true, get: function () { return index_js_1.LOG_LEVEL; } });
-Object.defineProperty(exports, "COLOR", { enumerable: true, get: function () { return index_js_1.COLOR; } });
+__exportStar(require("./create/index"), exports);
+var index_1 = require("./types/index");
+Object.defineProperty(exports, "LOG_LEVEL", { enumerable: true, get: function () { return index_1.LOG_LEVEL; } });
+Object.defineProperty(exports, "COLOR", { enumerable: true, get: function () { return index_1.COLOR; } });
 //# sourceMappingURL=main.js.map
