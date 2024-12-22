@@ -32,11 +32,14 @@ export declare class Ion {
     private _print_primitive;
     private _use_console_method;
     private _get_style_from_method;
+    private _get_time_prefix;
+    private _get_method_prefix;
     private _get_prefix_from_method;
     private _is_traceble;
     private _is_debugable;
     private _is_infoble;
     private _is_warnable;
     private _is_errable;
+    private _color_json;
 }
 export {};

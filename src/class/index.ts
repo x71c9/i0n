@@ -7,6 +7,7 @@
  */
 
 import ora from 'ora-classic';
+import dateformat from 'dateformat';
 import * as types from '../types/index.js';
 
 type DeepPartial<T> = {
@@ -23,8 +24,15 @@ const ora_spinner = ora({
 export class Ion {
   public params: types.IonParams = {
     prefix: '',
+    prefix_method: true,
+    prefix_method_length: 3,
+    prefix_method_flat: false,
+    prefix_method_string: '',
     log_level: types.LOG_LEVEL.TRACE,
     color: true,
+    flat: true,
+    flat_color: types.COLOR.DIM,
+    time: 'HH:MM:ss.l',
     force_spin: false,
     trace: {
       method: types.CONSOLE_METHOD.log,
@@ -136,22 +144,28 @@ export class Ion {
   private _print_full_objects(method: types.Method, data: any): void {
     let full_log: string[] = [];
     for (const arg of data) {
-      full_log.push(this._process_data(arg));
+      full_log.push(...this._process_data(arg, method));
     }
-    this._print(method, full_log.join(' '));
+    for (const line of full_log) {
+      this._print(method, line);
+    }
   }
 
-  private _process_data(data: any): string {
+  private _process_data(data: any, method: types.Method): string[] {
     if (typeof data === 'object' && data !== null) {
-      return JSON.stringify(data, null, 2);
+      // return JSON.stringify(data, null, 2);
+      return this._color_json(data, method);
     }
-    return data;
+    return [data];
   }
 
   private _print(method: types.Method, data: any): void {
     const method_prefix = this._get_prefix_from_method(method);
     const with_prefix = `${this.params.prefix}${method_prefix}${data}`;
-    const final_data = this._paint(method, with_prefix);
+    const painted_data = this._paint(method, with_prefix);
+    const time_prefix = this._get_time_prefix();
+    const prefix_method = this._get_method_prefix(method);
+    const final_data = `${time_prefix}${prefix_method}${painted_data}`;
     const was_spinning = this._stop_spinning();
     this._print_primitive(method, final_data);
     this._start_spinning(was_spinning);
@@ -171,11 +185,11 @@ export class Ion {
     }
   }
 
-  private _paint(method: types.Method, str: string): string {
+  private _paint(method: types.Method, str: string, force?: boolean): string {
     if (_env_no_color_is_true() || this.params.color === false) {
       return str;
     }
-    const style = this._get_style_from_method(method);
+    const style = this._get_style_from_method(method, force);
     const styled_log = style + str + _terminal_styles.reset;
     return styled_log;
   }
@@ -265,7 +279,13 @@ export class Ion {
     }
   }
 
-  private _get_style_from_method(method: types.Method): string {
+  private _get_style_from_method(
+    method: types.Method,
+    force?: boolean
+  ): string {
+    if (this.params.flat !== false && !force) {
+      return _get_style_from_color(this.params.flat_color);
+    }
     const color = this.params[method].color;
     if (_is_base_color(color)) {
       return _get_style_from_color(color as types.Color);
@@ -275,6 +295,34 @@ export class Ion {
       return _style.DEFAULT;
     }
     return custom_style;
+  }
+
+  private _get_time_prefix(): string {
+    if (!this.params.time) {
+      return '';
+    }
+    const time = dateformat(new Date(), this.params.time);
+    return this.params.color
+      ? `${_terminal_styles.fgLightGrey}[${time}]${_terminal_styles.reset} `
+      : `[${time}] `;
+  }
+
+  private _get_method_prefix(method: types.Method): string {
+    if (!this.params.prefix_method) {
+      return '';
+    }
+    let full_method =
+      method.length < this.params.prefix_method_length
+        ? method.padEnd(this.params.prefix_method_length)
+        : method.substring(0, this.params.prefix_method_length);
+    const substring = this.params.prefix_method_string
+      ? this.params.prefix_method_string
+      : `[${full_method}] `;
+
+    let force = this.params.prefix_method_flat === true ? false : true;
+    return this.params.color === false
+      ? substring
+      : this._paint(method, substring, force);
   }
 
   private _get_prefix_from_method(method: types.Method): string {
@@ -320,6 +368,48 @@ export class Ion {
       return true;
     }
     return false;
+  }
+
+  private _color_json(
+    obj: Record<string, any>,
+    method: types.Method
+  ): string[] {
+    const json_string = JSON.stringify(obj, null, 2);
+    // const key_color = _terminal_styles.fgWhite;
+    const key_color =
+      _env_no_color_is_true() || this.params.color === false
+        ? ''
+        : this.params.flat
+        ? _get_style_from_color(this.params.flat_color)
+        : this._get_style_from_method(method);
+    const value_color = _terminal_styles.fgYellow;
+    const date_color = _terminal_styles.fgMagenta;
+    const value_color_string = _terminal_styles.fgGreen;
+    const reset_color = _terminal_styles.reset;
+
+    // Regular expression to find keys and values in the JSON string
+    const json_with_colors = json_string.replace(
+      /"([^"]+)":|(".*?"|true|false|null|\d+)/g,
+      (match, key, value) => {
+        if (key) {
+          return `${key_color}${key}${reset_color}:`;
+        } else if (value) {
+          const isDate =
+            /^"(?:\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)"$/.test(
+              value
+            ) && !isNaN(Date.parse(value.replace(/"/g, '')));
+          if (isDate) {
+            return `${date_color}${value.replaceAll('"', '')}${reset_color}`;
+          } else if (value[0] === '"') {
+            return `${value_color_string}${value}${reset_color}`;
+          } else {
+            return `${value_color}${value}${reset_color}`;
+          }
+        }
+        return match;
+      }
+    );
+    return json_with_colors.split('\n');
   }
 }
 

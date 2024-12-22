@@ -10,7 +10,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ion = void 0;
 const index_1 = __importDefault(require("./index"));
-exports.ion = index_1.default.create({});
+exports.ion = index_1.default.create({
+// flat: true,
+// flat_color: i0n.COLOR.DIM,
+// color: true,
+// time: '',
+// prefix_method: false,
+// prefix_method_flat: true,
+// prefix_method_string: `▒ `
+// prefix_method_length: 7,
+});
+const data = {
+    a: true,
+    b: 2,
+    c: 'hello',
+    data: {
+        attr: 'y',
+        fake: new Date(),
+    }
+};
+// console.log(data);
+exports.ion.info(data);
 exports.ion.trace(`trace`);
 exports.ion.debug(`debug`);
 exports.ion.info(`info`);

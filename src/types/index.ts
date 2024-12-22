@@ -13,7 +13,14 @@ export type Config = {};
 export type IonParams = {
   log_level: LogLevel;
   prefix: string;
+  prefix_method: boolean;
+  prefix_method_length: number;
+  prefix_method_flat: boolean;
+  prefix_method_string: string;
   color: boolean;
+  flat: boolean;
+  flat_color: Color;
+  time: string;
   force_spin: boolean;
   spinner: Spinner;
 } & {
